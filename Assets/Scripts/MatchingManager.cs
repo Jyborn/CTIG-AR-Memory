@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
@@ -40,6 +41,8 @@ public class MatchingManager : MonoBehaviour
         {
             pairs++;
             matchesText.text = "Score: " + pairs;
+            Destroy(cards[0].gameObject, 1);
+            Destroy(cards[1].gameObject, 1);
         }
         
         List<Coroutine> flipCoroutines = new List<Coroutine>();
