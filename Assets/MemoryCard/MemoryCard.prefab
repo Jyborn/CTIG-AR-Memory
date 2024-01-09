@@ -120,6 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlipped: 0
   isFlipping: 0
-  distanceToAllowClick: 5
-  player: {fileID: 0}
   modelToShowWhenFlipped: {fileID: 0}

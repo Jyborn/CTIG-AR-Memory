@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -11,12 +12,15 @@ public class CardSpawner: MonoBehaviour {
 	private string folderName = "ChristmasModels";
 	private ARAnchorManager anchorManager;
     private ARPlaneManager planeManager;
+    private MatchingManager matchManager;
 
     private static ILogger logger = Debug.unityLogger;
 
     public void SpawnCardsOnPlanes() {
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
         planeManager = gameObject.GetComponent<ARPlaneManager>();
+        matchManager = gameObject.GetComponent<MatchingManager>();
+        
         planeManager.enabled = false;
         
         if (planeManager == null)
@@ -64,7 +68,11 @@ public class CardSpawner: MonoBehaviour {
 	    card.tag = "SpawnedObject";
 	    
 	    FlippableCard fcard = card.GetComponent<FlippableCard>();
-	    fcard.modelToShowWhenFlipped = flippedModel;
+	    GameObject model = Instantiate(flippedModel);
+	    fcard.modelToShowWhenFlipped = model;
+	    Bounds prefabBounds = GetPrefabBounds(flippedModel);
+	    Vector3 scale = new Vector3(0.5f / prefabBounds.size.x, 0.5f / prefabBounds.size.y, 0.5f / prefabBounds.size.z);
+	    fcard.modelToShowWhenFlipped.transform.localScale = scale;
 	    logger.Log("Spawned card at " + card.transform.position);
 	    
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
@@ -75,7 +83,7 @@ public class CardSpawner: MonoBehaviour {
 
 	    // Set the card's parent to the anchor
 	    card.transform.parent = cardAnchor.transform;
-
+		matchManager.memoryCards.Add(fcard);
 	    logger.Log("Added an anchor to the plane " + targetPlane);
     }
     
@@ -126,6 +134,38 @@ public class CardSpawner: MonoBehaviour {
 		    T value = list[k];
 		    list[k] = list[n];
 		    list[n] = value;
+	    }
+    }
+    
+    Bounds GetPrefabBounds(GameObject prefab)
+    {
+	    // Instantiate the prefab temporarily to calculate its bounds
+	    GameObject tempPrefab = Instantiate(prefab);
+	    Bounds bounds = GetPrefabRendererBounds(tempPrefab);
+
+	    // Destroy the temporary instance
+	    Destroy(tempPrefab);
+
+	    return bounds;
+    }
+
+    Bounds GetPrefabRendererBounds(GameObject prefab)
+    {
+	    // Retrieve the bounds from the first renderer in the prefab
+	    Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+	    if (renderers.Length > 0)
+	    {
+		    Bounds bounds = renderers[0].bounds;
+		    foreach (Renderer renderer in renderers)
+		    {
+			    bounds.Encapsulate(renderer.bounds);
+		    }
+		    return bounds;
+	    }
+	    else
+	    {
+		    Debug.LogError("No renderer found in the prefab.");
+		    return new Bounds(Vector3.zero, Vector3.zero);
 	    }
     }
 }

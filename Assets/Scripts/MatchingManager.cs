@@ -39,7 +39,7 @@ public class MatchingManager : MonoBehaviour
         if (isPair)
         {
             pairs++;
-            matchesText.text = "Matches: " + pairs;
+            matchesText.text = "Score: " + pairs;
         }
         
         List<Coroutine> flipCoroutines = new List<Coroutine>();
