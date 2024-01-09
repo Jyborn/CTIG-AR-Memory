@@ -1394,6 +1394,7 @@ GameObject:
   - component: {fileID: 1988718320}
   - component: {fileID: 1988718325}
   - component: {fileID: 1988718326}
+  - component: {fileID: 1988718327}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -1490,6 +1491,19 @@ MonoBehaviour:
   cardPrefab: {fileID: 3854916090083237402, guid: 8e0cfe591def4e54d8528b726edb9b3e,
     type: 3}
   numPairs: 2
+--- !u!114 &1988718327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988718318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112ede8e6dd746d19f576ab4d4083066, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCamera: {fileID: 204362644}
 --- !u!1 &2040999254
 GameObject:
   m_ObjectHideFlags: 0

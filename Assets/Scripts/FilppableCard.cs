@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class FlippableCard : MonoBehaviour
 {
 
     public bool isFlipped = false;
     public bool isFlipping = false;
-    public float distanceToAllowClick = 5;
-    public Transform player;
-
     public GameObject modelToShowWhenFlipped;
+    
+    private static ILogger logger = Debug.unityLogger;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +20,6 @@ public class FlippableCard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Vector3.Distance(transform.position, player.position) < distanceToAllowClick)
-        {
-            StartCoroutine(FlipCard());
-        }
         modelToShowWhenFlipped.SetActive(isFlipped);
     }
 

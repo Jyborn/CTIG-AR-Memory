@@ -30,14 +30,14 @@ public class CardSpawner: MonoBehaviour {
         }
 
         List<GameObject> flippedModels = GetRandomPrefabsFromFolder(folderName, numPairs);
-        
+        Debug.Log("fliped models length " + flippedModels.Count + " planes length " + planeManager.trackables.count);
         // Loop through all the planes
         var i = 0;
         foreach (var plane in planeManager.trackables)
         {
 	        if (i < numPairs * 2)
 	        {
-		        GameObject model = flippedModels[i];
+		        var model = flippedModels[i];
 		        SpawnCard(plane, model);   
 	        }
 	        plane.gameObject.SetActive(false);
