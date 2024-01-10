@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using GameManagers;
 
 public class CardSpawner: MonoBehaviour {
 	public GameObject cardPrefab;
@@ -12,14 +13,14 @@ public class CardSpawner: MonoBehaviour {
 	private string folderName = "ChristmasModels";
 	private ARAnchorManager anchorManager;
     private ARPlaneManager planeManager;
-    private MatchingManager matchManager;
+    private GameManager gameManager;
 
     private static ILogger logger = Debug.unityLogger;
 
     public void SpawnCardsOnPlanes() {
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
         planeManager = gameObject.GetComponent<ARPlaneManager>();
-        matchManager = gameObject.GetComponent<MatchingManager>();
+        gameManager = gameObject.GetComponent<GameManager>();
         
         planeManager.enabled = false;
         
@@ -83,7 +84,7 @@ public class CardSpawner: MonoBehaviour {
 
 	    // Set the card's parent to the anchor
 	    card.transform.parent = cardAnchor.transform;
-		matchManager.memoryCards.Add(fcard);
+		gameManager.MemoryCards.Add(fcard);
 	    logger.Log("Added an anchor to the plane " + targetPlane);
     }
     

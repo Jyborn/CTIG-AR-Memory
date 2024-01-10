@@ -9,7 +9,7 @@ public class FlippableCard : MonoBehaviour
     public bool isFlipped = false;
     public bool isFlipping = false;
     public GameObject modelToShowWhenFlipped;
-
+    public float timeOfFlip;
     private static ILogger logger = Debug.unityLogger;
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class FlippableCard : MonoBehaviour
             yield break;
         }
         isFlipping = true;
-
+        timeOfFlip = Time.time;
         float duration = 1.0f; // Set the duration of the flip
         float elapsedTime = 0f;
 
