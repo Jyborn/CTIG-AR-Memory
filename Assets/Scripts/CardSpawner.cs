@@ -1,29 +1,32 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 using GameManagers;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class CardSpawner: MonoBehaviour {
 	public GameObject cardPrefab;
-	public int numPairs= 2;
+	public int numPairs;
 	private string folderName = "ChristmasModels";
 	private ARAnchorManager anchorManager;
     private ARPlaneManager planeManager;
     private GameManager gameManager;
-
+    [SerializeField] private PlaneDetectionUI _planeDetectionUI;
     private static ILogger logger = Debug.unityLogger;
+
+    public void Start()
+    {
+	    numPairs = PlayerPrefs.GetInt("NumPairs", 2);
+	    logger.Log("NUMBER OF PAIRS: " + numPairs);
+    }
 
     public void SpawnCardsOnPlanes() {
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
         planeManager = gameObject.GetComponent<ARPlaneManager>();
         gameManager = gameObject.GetComponent<GameManager>();
-        
-        planeManager.enabled = false;
-        
+
         if (planeManager == null)
         {
 	        Debug.LogError("ARPlaneManager not found on this GameObject");
@@ -34,8 +37,10 @@ public class CardSpawner: MonoBehaviour {
 	        return;
         }
 
+        _planeDetectionUI.ChangeUI();
+        planeManager.enabled = false;
         List<GameObject> flippedModels = GetRandomPrefabsFromFolder(folderName, numPairs);
-        Debug.Log("fliped models length " + flippedModels.Count + " planes length " + planeManager.trackables.count);
+        
         // Loop through all the planes
         var i = 0;
         foreach (var plane in planeManager.trackables)
@@ -71,9 +76,7 @@ public class CardSpawner: MonoBehaviour {
 	    FlippableCard fcard = card.GetComponent<FlippableCard>();
 	    GameObject model = Instantiate(flippedModel);
 	    fcard.modelToShowWhenFlipped = model;
-	    Bounds prefabBounds = GetPrefabBounds(flippedModel);
-	    Vector3 scale = new Vector3(0.5f / prefabBounds.size.x, 0.5f / prefabBounds.size.y, 0.5f / prefabBounds.size.z);
-	    fcard.modelToShowWhenFlipped.transform.localScale = scale;
+	    //fcard.modelToShowWhenFlipped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 	    logger.Log("Spawned card at " + card.transform.position);
 	    
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();

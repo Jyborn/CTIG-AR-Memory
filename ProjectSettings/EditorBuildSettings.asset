@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Score.unity
     guid: abbe8045c0642f24186cc9e637cb91f8
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 30e36282333e96d4fb734ec0a10401cd
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}

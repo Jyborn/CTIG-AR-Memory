@@ -5,6 +5,7 @@ using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
 
 namespace GameManagers
 {
@@ -19,8 +20,9 @@ namespace GameManagers
         private static float score = 0f;
 
         public TextMeshProUGUI matchesText;
-        public AudioSource audioSource;
-        
+        private AudioSource audioSource;
+
+        [SerializeField] private ARSession _arSession;
         public float Score
         {
             get { return ScoreManager.GlobalScore; }
@@ -35,6 +37,7 @@ namespace GameManagers
 
         public void GoToScoreScreen()
         {
+            _arSession.Reset();
             SceneManager.LoadScene(2);
         }
         
