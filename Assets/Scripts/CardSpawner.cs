@@ -41,7 +41,6 @@ public class CardSpawner: MonoBehaviour {
         planeManager.enabled = false;
         List<GameObject> flippedModels = GetRandomPrefabsFromFolder(folderName, numPairs);
         
-        // Loop through all the planes
         var i = 0;
         foreach (var plane in planeManager.trackables)
         {
@@ -59,15 +58,13 @@ public class CardSpawner: MonoBehaviour {
     {
 	    GameObject card;
 	    ARAnchor cardAnchor;
-
-	    // Check if the ARPlane parameter is null
+	    
 	    if (targetPlane == null)
 	    {
 		    logger.Log("Target plane is null");
 		    return;
 	    }
-
-	    // Calculate the position for spawning the card
+	    
 	    Vector3 spawnPosition = targetPlane.center + targetPlane.normal * 0.1f;
 	    
 	    card = Instantiate(cardPrefab, spawnPosition, Quaternion.identity);
@@ -81,11 +78,9 @@ public class CardSpawner: MonoBehaviour {
 	    
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
 	    if (anchorManager == null) { return; }
-
-	    // Attach an anchor to the specified plane
+	    
 	    cardAnchor = anchorManager.AttachAnchor(targetPlane, new Pose(spawnPosition, Quaternion.identity));
-
-	    // Set the card's parent to the anchor
+	    
 	    card.transform.parent = cardAnchor.transform;
 		gameManager.MemoryCards.Add(fcard);
 	    logger.Log("Added an anchor to the plane " + targetPlane);
@@ -140,36 +135,5 @@ public class CardSpawner: MonoBehaviour {
 		    list[n] = value;
 	    }
     }
-    
-    Bounds GetPrefabBounds(GameObject prefab)
-    {
-	    // Instantiate the prefab temporarily to calculate its bounds
-	    GameObject tempPrefab = Instantiate(prefab);
-	    Bounds bounds = GetPrefabRendererBounds(tempPrefab);
 
-	    // Destroy the temporary instance
-	    Destroy(tempPrefab);
-
-	    return bounds;
-    }
-
-    Bounds GetPrefabRendererBounds(GameObject prefab)
-    {
-	    // Retrieve the bounds from the first renderer in the prefab
-	    Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
-	    if (renderers.Length > 0)
-	    {
-		    Bounds bounds = renderers[0].bounds;
-		    foreach (Renderer renderer in renderers)
-		    {
-			    bounds.Encapsulate(renderer.bounds);
-		    }
-		    return bounds;
-	    }
-	    else
-	    {
-		    Debug.LogError("No renderer found in the prefab.");
-		    return new Bounds(Vector3.zero, Vector3.zero);
-	    }
-    }
 }
