@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1fb2de441dbdeae4fa62b00fc5f2b5c6, type: 2}
+  - {fileID: 2100000, guid: 49903ed8ce2e38f49909ecd27740f672, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,3 +121,4 @@ MonoBehaviour:
   isFlipped: 0
   isFlipping: 0
   modelToShowWhenFlipped: {fileID: 0}
+  timeOfFlip: 0
