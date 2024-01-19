@@ -5,11 +5,14 @@ using UnityEngine.XR.ARFoundation;
 using GameManagers;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using UI;
 
 public class CardSpawner: MonoBehaviour {
 	public GameObject cardPrefab;
 	public int numPairs;
-	private string folderName = "ChristmasModels";
+	//private string folderName = "ChristmasModels";
+	public SettingsUI settingsUI;
+	private string folderName;
 	private ARAnchorManager anchorManager;
     private ARPlaneManager planeManager;
     private GameManager gameManager;
@@ -20,6 +23,28 @@ public class CardSpawner: MonoBehaviour {
     {
 	    numPairs = PlayerPrefs.GetInt("NumPairs", 2);
 	    logger.Log("NUMBER OF PAIRS: " + numPairs);
+
+		string KeyName = "Models";
+		if (PlayerPrefs.HasKey(KeyName))
+        {
+            Debug.Log("The key " + KeyName + " exists");
+        }
+        else
+            Debug.Log("The key " + KeyName + " does not exist");
+		folderName = PlayerPrefs.GetString("Models", "ChristmasModels");
+		logger.Log("FOLDER NAME: " + folderName);
+		// settingsUI = FindObjectOfType<SettingsUI>();
+        // if (settingsUI == null)
+        // {
+        //     Debug.LogError("SettingsUI script not found in the scene.");
+        //     return;
+        // }
+        // // Access the dropdown value
+        // string selectedValue = settingsUI.GetSelectedValue();
+        // Debug.Log("Dropdown value in AnotherScript: " + selectedValue);
+		// folderName = selectedValue;
+		// Debug.Log("FOLDER NAME: " + folderName);
+
     }
 
     public void SpawnCardsOnPlanes() {
