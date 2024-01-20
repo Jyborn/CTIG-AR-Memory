@@ -23,6 +23,8 @@ public class CardSpawner: MonoBehaviour {
     }
 
     public void SpawnCardsOnPlanes() {
+		Debug.Log("Spawn planes");
+
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
         planeManager = gameObject.GetComponent<ARPlaneManager>();
         gameManager = gameObject.GetComponent<GameManager>();
@@ -32,10 +34,15 @@ public class CardSpawner: MonoBehaviour {
 	        Debug.LogError("ARPlaneManager not found on this GameObject");
 	        return;
         }
+        Debug.Log("numPairs = " + numPairs);
+		Debug.Log("required Cards " + numPairs * 2);
+		Debug.Log("planes = " + planeManager.trackables.count);
         if (numPairs > planeManager.trackables.count/2)
         {
-	        return;
+            Debug.Log("Not enough planes for nr of cards");
+            return;
         }
+		Debug.Log("Enough planes");
 
         _planeDetectionUI.ChangeUI();
         planeManager.enabled = false;
@@ -44,6 +51,7 @@ public class CardSpawner: MonoBehaviour {
         var i = 0;
         foreach (var plane in planeManager.trackables)
         {
+			Debug.Log("Inside foreach to spawn cards");
 	        if (i < numPairs * 2)
 	        {
 		        var model = flippedModels[i];

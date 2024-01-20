@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        myCamera = gameObject.transform.Find("AR Camera").gameObject.GetComponent<Camera>();
+        myCamera = gameObject.transform.Find("Camera Offset/Main Camera").gameObject.GetComponent<Camera>();
     }
 
     void FixedUpdate()
