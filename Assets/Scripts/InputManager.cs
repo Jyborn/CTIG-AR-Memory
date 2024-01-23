@@ -6,16 +6,23 @@ using UnityEngine.XR.ARSubsystems;
 public class InputManager : MonoBehaviour
 {
     public Camera myCamera;
+    private AudioManager audioManager;
 
     private void Start()
     {
         myCamera = gameObject.transform.Find("Camera Offset/Main Camera").gameObject.GetComponent<Camera>();
+        audioManager = gameObject.GetComponent<AudioManager>();
     }
 
     void FixedUpdate()
     {
+        if(Input.touchCount > 1)
+        {
+            Debug.Log("Greater");
+        }
         if (Input.touchCount == 1)
-        {   
+        {
+            Debug.Log("Input.touchCount==1");
             RaycastHit[] myHits;
             Ray r;
 		
@@ -29,6 +36,7 @@ public class InputManager : MonoBehaviour
 
                 if (flippableCard != null)
                 {
+                    audioManager.ClickCardSound();
                     Debug.Log("Hit a FlippableCard with model " + flippableCard.modelToShowWhenFlipped.name);
                     StartCoroutine(flippableCard.FlipCard());
                 }

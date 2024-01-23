@@ -18,9 +18,9 @@ namespace GameManagers
         private int numOfValidPairs;
         private int pairs = 0;
         private static float score = 0f;
-
         public TextMeshProUGUI matchesText;
-        private AudioSource audioSource;
+        private AudioManager audioManager;
+        
 
         [SerializeField] private ARSession _arSession;
         public float Score
@@ -45,8 +45,8 @@ namespace GameManagers
         void Start()
         {
             var cardSpawner = gameObject.GetComponent<CardSpawner>();
+            audioManager = gameObject.GetComponent<AudioManager>();
             numOfValidPairs = cardSpawner.numPairs;
-            audioSource = gameObject.GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -82,11 +82,15 @@ namespace GameManagers
                 score += Mathf.Abs(cards[0].timeOfFlip - cards[1].timeOfFlip);
                 matchesText.text = "Score: " + score;
                 Score = score;
-                PlaySound();
+                audioManager.MatchSound(true);
                 Destroy(cards[0].gameObject, 1);
                 Destroy(cards[0].modelToShowWhenFlipped, 1);
                 Destroy(cards[1].gameObject, 1);
                 Destroy(cards[1].modelToShowWhenFlipped, 1);
+            }
+            else
+            {
+                audioManager.MatchSound(false);
             }
 
             List<Coroutine> flipCoroutines = new List<Coroutine>();
@@ -101,18 +105,6 @@ namespace GameManagers
                 yield return coroutine;
             }
 
-        }
-        
-        void PlaySound()
-        {
-            if (audioSource.clip != null)
-            {
-                audioSource.Play();
-            }
-            else
-            {
-                Debug.LogError("AudioClip not assigned. Please assign an AudioClip to the AudioSource component.");
-            }
         }
     }
 }
