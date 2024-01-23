@@ -651,6 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchesText: {fileID: 445244665}
+  congratsText: {fileID: 2139228752}
 --- !u!114 &1099142494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -953,11 +954,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CONGRATUALTIONS!!!
+  m_text: 'CONGRATULATIONS!!!
 
 
-    YOU COMPLETED THE GAME, PLAY AGAIN AND TRY TO
-    GET A LOWER SCORE!'
+    YOU COMPLETED THE GAME. PLAY AGAIN AND TRY TO
+    GET A HIGHER SCORE!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

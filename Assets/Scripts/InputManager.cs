@@ -16,13 +16,10 @@ public class InputManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Input.touchCount > 1)
-        {
-            Debug.Log("Greater");
-        }
+
         if (Input.touchCount == 1)
         {
-            Debug.Log("Input.touchCount==1");
+
             RaycastHit[] myHits;
             Ray r;
 		

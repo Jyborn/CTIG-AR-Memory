@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class CardSpawner: MonoBehaviour {
 	public GameObject cardPrefab;
 	public int numPairs;
+	private bool gameStart = false;
 	private string folderName = "ChristmasModels";
 	private ARAnchorManager anchorManager;
     private ARPlaneManager planeManager;
@@ -23,8 +24,7 @@ public class CardSpawner: MonoBehaviour {
     }
 
     public void SpawnCardsOnPlanes() {
-		Debug.Log("Spawn planes");
-
+	
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
         planeManager = gameObject.GetComponent<ARPlaneManager>();
         gameManager = gameObject.GetComponent<GameManager>();
@@ -42,7 +42,6 @@ public class CardSpawner: MonoBehaviour {
             Debug.Log("Not enough planes for nr of cards");
             return;
         }
-		Debug.Log("Enough planes");
 
         _planeDetectionUI.ChangeUI();
         planeManager.enabled = false;
@@ -60,6 +59,7 @@ public class CardSpawner: MonoBehaviour {
 	        plane.gameObject.SetActive(false);
 	        i++;
         }
+		gameStart = true;
     }
 
     private void SpawnCard(ARPlane targetPlane, GameObject flippedModel)
@@ -143,5 +143,10 @@ public class CardSpawner: MonoBehaviour {
 		    list[n] = value;
 	    }
     }
+
+	public bool isGameStarted()
+	{
+		return gameStart;
+	}
 
 }

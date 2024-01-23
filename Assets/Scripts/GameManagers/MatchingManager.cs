@@ -19,7 +19,14 @@ namespace GameManagers
         private int pairs = 0;
         private static float score = 0f;
         public TextMeshProUGUI matchesText;
+        public TextMeshProUGUI timeText;
+ 
         private AudioManager audioManager;
+       
+        private int pointsAddedForCorrectMatch = 10;
+        private int pointsSubtractedForIncorrectMatch = 5;
+        private float remainingTime;
+        private CardSpawner cardSpawner;
         
 
         [SerializeField] private ARSession _arSession;
@@ -44,16 +51,19 @@ namespace GameManagers
         // Start is called before the first frame update
         void Start()
         {
-            var cardSpawner = gameObject.GetComponent<CardSpawner>();
+            cardSpawner = gameObject.GetComponent<CardSpawner>();
             audioManager = gameObject.GetComponent<AudioManager>();
+            remainingTime = DifficultyManager.Instance.TimeAvailable;
             numOfValidPairs = cardSpawner.numPairs;
+           
         }
 
         // Update is called once per frame
         void Update()
         {
             if (pairs == numOfValidPairs)
-            {   
+            {
+                ScoreManager.IsGameWon = true;
                 Invoke("GoToScoreScreen", 5);
             }
 
@@ -70,6 +80,17 @@ namespace GameManagers
             {
                 StartCoroutine(CheckFlippedPairWithDelay(flippedCards));
             }
+
+            if (cardSpawner.isGameStarted())
+            {
+                remainingTime -= Time.deltaTime;
+                if (remainingTime <= 0)
+                {
+                    remainingTime = 0; // To avoid negative values, while loading next screen
+                    Invoke("GoToScoreScreen", 5);
+                }
+            }
+            timeText.text = "Time: " + (int) remainingTime;
         }
 
         private IEnumerator CheckFlippedPairWithDelay(IList<FlippableCard> cards)
@@ -79,9 +100,7 @@ namespace GameManagers
             if (isPair)
             {
                 pairs++;
-                score += Mathf.Abs(cards[0].timeOfFlip - cards[1].timeOfFlip);
-                matchesText.text = "Score: " + score;
-                Score = score;
+                score += pointsAddedForCorrectMatch;
                 audioManager.MatchSound(true);
                 Destroy(cards[0].gameObject, 1);
                 Destroy(cards[0].modelToShowWhenFlipped, 1);
@@ -91,8 +110,10 @@ namespace GameManagers
             else
             {
                 audioManager.MatchSound(false);
+                score -= pointsSubtractedForIncorrectMatch;
             }
-
+            Score = score;
+            matchesText.text = "Score: " + score;
             List<Coroutine> flipCoroutines = new List<Coroutine>();
 
             foreach (var card in cards)
