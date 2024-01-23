@@ -12,17 +12,19 @@ namespace UI
 
         public Slider numPairsSlider;
         public TextMeshProUGUI numPairsText;
-        public Dropdown dropdown;
-        public TextMeshProUGUI modelsToUse;
+        [SerializeField] public TMP_Dropdown dropdown;
         public void Start()
         {
             //Adds a listener to the main slider and invokes a method when the value changes.
             numPairsSlider.onValueChanged.AddListener(delegate {ChangeNumPairs(); });
             numPairsSlider.value = PlayerPrefs.GetInt("NumPairs", 2);
-            dropdown = GetComponent<Dropdown>();
-            PlayerPrefs.SetString("Models", dropdown.options[dropdown.value].text);
-            dropdown.onValueChanged.AddListener(delegate { DropdownValueChanged(dropdown); });
-            dropdown.options[dropdown.value].text = PlayerPrefs.GetString("Models", "ChristmasModels");
+  
+            string storedModel = PlayerPrefs.GetString("Models", "ChristmasModels");
+            int index = dropdown.options.FindIndex(option => option.text == storedModel);
+            dropdown.value = index >= 0 ? index : 0;
+
+            // Add a listener to the dropdown's value change event
+            dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
         }
         public void ChangeNumPairs()
         {
@@ -31,11 +33,11 @@ namespace UI
             PlayerPrefs.Save();
         }
 
-        void DropdownValueChanged(Dropdown change)
+        void OnDropdownValueChanged(int value)
         {
-            modelsToUse.text = dropdown.options[dropdown.value].text;
-            logger.Log("MODEL NAME: " + modelsToUse.text);
-            PlayerPrefs.SetString("Models", dropdown.options[dropdown.value].text);
+            string modelPackageName = dropdown.options[value].text;
+            logger.Log("MODEL NAME: " + modelPackageName);
+            PlayerPrefs.SetString("Models", modelPackageName);
             PlayerPrefs.Save();
 
             // Debug.Log("Selected: " + dropdown.options[dropdown.value].text);
