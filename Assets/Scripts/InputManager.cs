@@ -19,7 +19,29 @@ public class InputManager : MonoBehaviour
 
         if (Input.touchCount == 1)
         {
+            RaycastHit hit;
+            Ray ray = myCamera.ScreenPointToRay(Input.GetTouch(0).position);
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                if (hit.transform.tag == "stopwatch")
+                {
+                    //TODO 
+                    Debug.Log("hit stopwatch");
+                }
+                else
+                {
+                    FlippableCard flippableCard = hit.transform.GetComponent<FlippableCard>();
 
+                    if (flippableCard != null)
+                    {
+                        audioManager.ClickCardSound();
+                        Debug.Log("Hit a FlippableCard with model " + flippableCard.modelToShowWhenFlipped.name);
+                        StartCoroutine(flippableCard.FlipCard());
+                    }
+                }
+            }
+            
+            /*
             RaycastHit[] myHits;
             Ray r;
 		
@@ -39,6 +61,7 @@ public class InputManager : MonoBehaviour
                 }
 
             }
+            */
         }
     }
 }
