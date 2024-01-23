@@ -1057,6 +1057,7 @@ GameObject:
   - component: {fileID: 1250398272}
   - component: {fileID: 1250398271}
   - component: {fileID: 1250398275}
+  - component: {fileID: 1250398276}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -1161,6 +1162,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b971f76d5d3d56745987e9f6ed35e427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1250398276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250398270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2880e358afbb4909b2d17c4b005f9e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numPairsSlider: {fileID: 0}
+  numPairsText: {fileID: 0}
+  dropdown: {fileID: 0}
+  modelsToUse: {fileID: 0}
 --- !u!1 &1461959397
 GameObject:
   m_ObjectHideFlags: 0
@@ -1940,6 +1957,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 3854916090083237402, guid: 8e0cfe591def4e54d8528b726edb9b3e,
     type: 3}
   numPairs: 2
+  settingsUI: {fileID: 0}
   _planeDetectionUI: {fileID: 1567689359}
 --- !u!114 &1988718327
 MonoBehaviour:
