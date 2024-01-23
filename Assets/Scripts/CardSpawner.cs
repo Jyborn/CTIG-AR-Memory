@@ -98,8 +98,11 @@ public class CardSpawner: MonoBehaviour {
 	    FlippableCard fcard = card.GetComponent<FlippableCard>();
 	    GameObject model = Instantiate(flippedModel);
 	    fcard.modelToShowWhenFlipped = model;
-	    //fcard.modelToShowWhenFlipped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-	    logger.Log("Spawned card at " + card.transform.position);
+		if (folderName == "Weapons")
+		{
+	    	fcard.modelToShowWhenFlipped.transform.localScale = new Vector3(1f, 1f, 1f);
+	    }
+		logger.Log("Spawned card at " + card.transform.position);
 	    
 	    anchorManager = gameObject.GetComponent<ARAnchorManager>();
 	    if (anchorManager == null) { return; }
