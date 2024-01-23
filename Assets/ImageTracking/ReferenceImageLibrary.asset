@@ -21,9 +21,9 @@ MonoBehaviour:
       m_GuidLow: 5623347684596438117
       m_GuidHigh: 8289016372263784867
     m_SerializedTextureGuid:
-      m_GuidLow: 2532326270710825298
-      m_GuidHigh: 16729032406407460827
-    m_Size: {x: 1, y: 0.6925926}
+      m_GuidLow: 73228556588993452
+      m_GuidHigh: 10644821838617431944
+    m_Size: {x: 1, y: 1}
     m_SpecifySize: 1
-    m_Name: mars
-    m_Texture: {fileID: 2800000, guid: 8d1bc152a1532324db37eae3567629e8, type: 3}
+    m_Name: stopwatch
+    m_Texture: {fileID: 2800000, guid: f6e6cbac28fb010488cf1c441001ba93, type: 3}
